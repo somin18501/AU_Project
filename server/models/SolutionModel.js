@@ -9,6 +9,10 @@ const solutionSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId, 
         ref:'Problem'
     },
+    language: {
+        type: String,
+        required: [true, "language is required"],
+    },
     code: {
         type: String,
         required: [true, "code is required"],

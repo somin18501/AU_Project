@@ -20,7 +20,7 @@ module.exports.uploadFile = async (req,res) => {
             let arr = JSON.parse(rawdata);
             fs.unlinkSync(newPath);
             const test = await Testcase.create({ problem, tests: arr });
-            res.status(201).json({message: "Testcases added successfully",success: true, test});
+            return res.status(201).json({message: "Testcases added successfully",success: true, test});
         }
     } catch (error) {
         console.error(error);
