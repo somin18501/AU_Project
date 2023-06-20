@@ -1,16 +1,22 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Layout from './Layout';
+import AllProblemPage from "./pages/AllProblemsPage";
+import SingleProblem from "./pages/SingleProblemPage";
+import AllSubmissionPage from "./pages/AllSubmissionPage";
+import AddProblemForm from "./pages/AddProblemForm";
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<HomePage />} />
+        <Route index element={<AllProblemPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/SingleProblem" element={<SingleProblem />} />
+        <Route path="/addProblem" element={<AddProblemForm />} />
+        <Route path="/AllSubmissions" element={<AllSubmissionPage />} />
       </Route>
     </Routes>
   );

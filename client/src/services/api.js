@@ -28,3 +28,12 @@ export const VerifyUser = async (data) => {
         console.log('Error while getting user data', error.message);
     }
 }
+
+export const UploadFile = async (data) => {
+    try {
+        const response = await axios.post(`${API_URI}/upload`,data,{ withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.log('Error while getting user data', error.message);
+    }
+}
