@@ -1,13 +1,17 @@
 const mongoose = require("mongoose");
 
 const solutionSchema = new mongoose.Schema({
-    owner: {
-        type:mongoose.Schema.Types.ObjectId, 
-        ref:'User'
-    },
-    problem: {
+    proid: {
         type:mongoose.Schema.Types.ObjectId, 
         ref:'Problem'
+    },
+    owner: {
+        type: String, 
+        required: true,
+    },
+    problem: {
+        type: String, 
+        required: true,
     },
     language: {
         type: String,

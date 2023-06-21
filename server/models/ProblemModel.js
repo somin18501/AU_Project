@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const problemSchema = new mongoose.Schema({
     writer: {
-        type:mongoose.Schema.Types.ObjectId, 
-        ref:'User'
+        type:String, 
+        required: true,
     },
     proname: {
         type: String,

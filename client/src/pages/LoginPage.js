@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Login } from "../services/api";
-import useToken from "../components/useToken";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/actions";
 
 export default function LoginPage(){
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [pass,setPassword] = useState('');
-    const { token, setToken } = useToken();
+    const dispatch = useDispatch();
+    const token = useSelector(state=>state.user);
+
+    useEffect(()=>{
+        if(token.token !== "") navigate(-1);
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,11 +25,9 @@ export default function LoginPage(){
             }
             const { success, message, token } = await Login(data);
             if (success) {
-                setToken(token)
+                dispatch(loginUser({token}));
                 handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
+                navigate(-1);
             } else {
                 handleError(message);
             }

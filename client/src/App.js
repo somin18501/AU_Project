@@ -14,9 +14,9 @@ function App() {
         <Route index element={<AllProblemPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/SingleProblem" element={<SingleProblem />} />
+        <Route path="/SingleProblem/:id" element={<SingleProblem />} />
         <Route path="/addProblem" element={<AddProblemForm />} />
-        <Route path="/AllSubmissions" element={<AllSubmissionPage />} />
+        <Route path="/AllSubmissions/:id" element={<AllSubmissionPage />} />
       </Route>
     </Routes>
   );

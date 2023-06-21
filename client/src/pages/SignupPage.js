@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Register } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
-import useToken from "../components/useToken";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/actions";
 
 export default function SignupPage(){
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [uname,setUname] = useState('');
     const [pass,setPassword] = useState('');
-    const { token, setToken } = useToken();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,11 +22,9 @@ export default function SignupPage(){
             }
             const { success, message, token } = await Register(data);
             if (success) {
-                setToken(token)
+                dispatch(loginUser({token}));
                 handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
+                navigate(-1);
             } else {
                 handleError(message);
             }

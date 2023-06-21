@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = "bjhfewf74926966jheufuf";
 
 module.exports.userVerification = (req, res) => {
-  const { token } = req.body;
+  let { token } = req.body;
   if (!token) {
     return res.json({ status: false })
   }

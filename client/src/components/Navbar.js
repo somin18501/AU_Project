@@ -1,12 +1,18 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-// import useToken from "./useToken";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkIfTokenExists, logoutUser } from "../redux/actions";
 
 export default function Navbar(){
-    // const { token, setToken } = useToken();
+    const token = useSelector(state=>state.user);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(checkIfTokenExists());
+    },[])
 
     return (
-        <div className="flex flex-cols justify-around">
+        <div className="flex flex-row justify-around">
             <Link to={'/'}>
                 Home
             </Link>
@@ -16,15 +22,25 @@ export default function Navbar(){
             <Link to={'/addProblem'}>
                 Add Problem
             </Link>
-            <div>
-                My submissions
-            </div>
-            <div>
-                favorite
-            </div>
-            <div>
-                Profile
-            </div>
+            {
+                token.token && (
+                    <div className="flex flex-row justify-between">
+                        <div className="mx-20">
+                            Profile
+                        </div>
+                        <button onClick={()=>dispatch(logoutUser())}>
+                            logout
+                        </button>
+                    </div>
+                )
+            }
+            {
+                !token.token && (
+                    <Link to={'/login'}>
+                        Login
+                    </Link>
+                )
+            }
         </div>
     );
 }
