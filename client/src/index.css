@@ -30,7 +30,7 @@
   .form_container > h2 {
     margin-block: 1rem;
     padding-block: 0.6rem;
-    color: rgba(0, 212, 255, 1);
+    color: gray;
   }
   
   .form_container > form {
@@ -48,7 +48,7 @@
   .form_container input {
     border: none;
     padding: 0.5rem;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(47, 47, 66);
     font-size: 1.1rem;
     outline: none;
   }
@@ -59,7 +59,7 @@
   }
   
   .form_container button {
-    background-color: rgba(0, 212, 255, 1);
+    background-color: rgb(47, 47, 66);
     color: #fff;
     border: none;
     padding: 0.6rem;
@@ -70,5 +70,5 @@
   
   span a {
     text-decoration: none;
-    color: rgba(0, 212, 255, 1);
+    color: rgb(47, 47, 66);
   }

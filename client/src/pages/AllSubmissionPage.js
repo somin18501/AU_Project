@@ -36,52 +36,77 @@ export default function AllSubmissionPage(){
 
     return (
         <div>
-            <div>
-                <button className="border" onClick={handleMySub}>My Submission</button>
-                <button className="border" onClick={()=>setMySub(false)}>All Submission</button>
+            <div className="my-2 flex flex-row justify-between">
+                <button className="border-2 rounded-lg p-2 text-white ml-4" onClick={handleMySub}>My Submission</button>
+                <button className="border-2 rounded-lg p-2 text-white mr-4" onClick={()=>setMySub(false)}>All Submission</button>
             </div>
-            {
-                !mySub && solArr.length>0 && solArr.map((item)=>(
-                    <div className="flex flex-row justify-around bg-gray-300 mt-10">
-                        <div>
-                            {item.owner}
-                        </div>
-                        <div>
-                            {item.problem}
-                        </div>
-                        <div>
-                            {item.language}
-                        </div>
-                        <div>
-                            {item.verdict}
-                        </div>
-                        <div>
-                            {item.submittedAt.substring(0, 10)}
-                        </div>
-                    </div>
-                ))
-            }
-            {
-                mySub && solArr.length>0 && solArr.filter((it)=>{return it.owner === uName}).map((item)=>(
-                    <div className="flex flex-row justify-around bg-gray-300 mt-10">
-                        <div>
-                            {item.owner}
-                        </div>
-                        <div>
-                            {item.problem}
-                        </div>
-                        <div>
-                            {item.language}
-                        </div>
-                        <div>
-                            {item.verdict}
-                        </div>
-                        <div>
-                            {item.submittedAt.substring(0, 10)}
-                        </div>
-                    </div>
-                ))
-            }
+            <div class="relative overflow-x-auto shadow-md">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                User Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Problem
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Language
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Verdict
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Submitted 
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            !mySub && solArr.length>0 && solArr.map((item)=>(
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {item.owner}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {item.problem}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.language}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.verdict}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.submittedAt.substring(0, 10)}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        {
+                            mySub && solArr.length>0 && solArr.filter((it)=>{return it.owner === uName}).map((item)=>(
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {item.owner}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {item.problem}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.language}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.verdict}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {item.submittedAt.substring(0, 10)}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>           
         </div>
     );
 }

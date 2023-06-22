@@ -80,61 +80,61 @@ export default function SingleProblem(){
     }
 
     return (
-        <div className="flex flex-col">
-            <div className="flex flex-row">
-                <div>
-                    <div>
+        <div className="flex flex-col text-white">
+            <div className="flex flex-row justify-between mt-10">
+                <div className="ml-24">
+                    <div className="text-3xl mb-2">
                         {proName}
                     </div>
-                    <div>
+                    <div className="text-xl my-4">
                         {proStat}
                     </div>
-                    <div>
+                    <div className="text-lg my-4">
                         {proConst}
                     </div>
                     <div>
-                        {diff}
-                    </div>
-                    <div>
-                        {writer}
+                        Writer: {writer}
                     </div>
                 </div>
                 <div>
-                    <Link to={`/AllSubmissions/${proName}`} className="border">Submissions</Link>
+                    {diff}
+                </div>
+                <div className="mr-24">
+                    <Link to={`/AllSubmissions/${proName}`} className="mt-1 border-2 rounded-lg p-2">Submissions</Link>
                 </div>
             </div>
             <div className="flex flex-row justify-around">
                 <div>
                     <form className="flex flex-col">
                         <div className="my-2 ml-5">
-                            <select value={language} className="bg-gray-300" onChange={(ev)=>setLanguage(ev.target.value)}>
+                            <select value={language} className="bg-white text-black rounded-lg" onChange={(ev)=>setLanguage(ev.target.value)}>
                                 <option value="c">C</option>
                                 <option value="cpp">C++</option>
                                 <option value="py">Python</option>
                             </select>
                         </div>
                         <div>
-                            <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-gray-300" rows="25" cols="100"></textarea>
+                            <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-white rounded-lg" rows="25" cols="100"></textarea>
                         </div>
                     </form>
-                    <button onClick={handleSubmit} className="border">Submit</button>
+                    <button onClick={handleSubmit} className="border-2 rounded-lg m-2 ml-6 p-2">Submit</button>
                 </div>
                 <div>
                     <form>
-                        <div className="mt-4">
+                        <div className="mt-6">
                             <p>Input</p>
-                            <textarea className="bg-gray-300" value={input} onChange={(ev)=>setInput(ev.target.value)} rows="10"></textarea>
+                            <textarea className="bg-white rounded-lg mr-4 mt-2" value={input} onChange={(ev)=>setInput(ev.target.value)} rows="10"></textarea>
                         </div>
-                        <div className="">
+                        <div className="mt-2">
                             <p>Output</p>
                             <textarea
                                 defaultValue={output}
-                                className="bg-gray-300"
+                                className="bg-white rounded-lg mr-4 mt-2"
                                 rows={10}
                             />
                         </div>
                     </form>
-                    <button onClick={handleRun} className="border">Run</button>
+                    <button onClick={handleRun} className="mt-1 border-2 rounded-lg p-2">Run</button>
                 </div>
             </div>
             {

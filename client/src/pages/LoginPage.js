@@ -46,35 +46,37 @@ export default function LoginPage(){
     });
 
     return (
-        <div className="form_container">
-        <h2>Login Account</h2>
-        <form onSubmit={handleSubmit}>
-            <div>
-            <label htmlFor="email">Email</label>
-            <input
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Enter your email"
-                onChange={(ev)=>setEmail(ev.target.value)}
-            />
+        <div className="mt-20 flex items-center justify-center">
+            <div className="form_container">
+                <h2>Login Account</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        placeholder="Enter your email"
+                        onChange={(ev)=>setEmail(ev.target.value)}
+                    />
+                    </div>
+                    <div>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={pass}
+                        placeholder="Enter your password"
+                        onChange={(ev)=>setPassword(ev.target.value)}
+                    />
+                    </div>
+                    <button type="submit">Submit</button>
+                    <span>
+                    Already have an account? <Link className="underline" to={"/signup"}>Signup</Link>
+                    </span>
+                </form>
+                <ToastContainer />
             </div>
-            <div>
-            <label htmlFor="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                value={pass}
-                placeholder="Enter your password"
-                onChange={(ev)=>setPassword(ev.target.value)}
-            />
-            </div>
-            <button type="submit">Submit</button>
-            <span>
-            Already have an account? <Link to={"/signup"}>Signup</Link>
-            </span>
-        </form>
-        <ToastContainer />
         </div>
     );
 }
