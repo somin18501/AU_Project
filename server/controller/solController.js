@@ -32,7 +32,34 @@ module.exports.SubmitSol = async (req,res) => {
                     const jobId = path.basename(filepath).split('.')[0];
                     const outpath = path.join(outputPath,`${jobId}.exe`);
                     let obj = spawnSync(`g++ ${filepath} -o ${outpath} && cd ${outputPath} && ${jobId}.exe`,[],{input:ip,encoding:'utf-8',shell:true});
-                    fs.unlinkSync(outpath);
+                    if(obj.error){
+                        result = "compilation error";
+                        break;
+                    }
+                    if(obj.stderr !== ''){
+                        result = "compilation error";
+                        break;
+                    }
+                    if(obj.stdout !== op){
+                        result = "wrong answer";
+                        fs.unlinkSync(outpath);
+                        break;
+                    } else{
+                        fs.unlinkSync(outpath);
+                    }
+                }
+                fs.unlinkSync(filepath);
+                const soldoc = await Solution.findById(sol._id.toString());
+                soldoc.set({
+                    verdict: result
+                })
+                await soldoc.save();
+            }else if(language === "py"){
+                const filepath = await generateFile(language, code);
+                for (var i = 0, l = tests.length; i < l; i++) {
+                    var ip = tests[i].input;
+                    var op = tests[i].output;
+                    let obj = spawnSync(`python ${filepath}`,[],{input:ip,encoding:'utf-8',shell:true});
                     if(obj.error){
                         result = "compilation error";
                         break;
@@ -44,7 +71,7 @@ module.exports.SubmitSol = async (req,res) => {
                     if(obj.stdout !== op){
                         result = "wrong answer";
                         break;
-                    } 
+                    }
                 }
                 fs.unlinkSync(filepath);
                 const soldoc = await Solution.findById(sol._id.toString());
@@ -55,6 +82,53 @@ module.exports.SubmitSol = async (req,res) => {
             }
         }
     }catch(error){
+        console.error(error);
+    }
+}
+
+module.exports.RunInput = async (req,res) => {
+    try {
+        const { input, language, code } = req.body;
+        if(code === undefined){
+            return res.status(400).json({error: "empty code"})
+        }
+        if(language === "cpp" || language === "c"){
+            const filepath = await generateFile(language, code);
+            const jobId = path.basename(filepath).split('.')[0];
+            const outpath = path.join(outputPath,`${jobId}.exe`);
+            fs.unlinkSync(filepath);
+            let obj = spawnSync(`g++ ${filepath} -o ${outpath} && cd ${outputPath} && ${jobId}.exe`,[],{input:input,encoding:'utf-8',shell:true});
+            if(obj.error){
+                const result = "compilation error";
+                return res.status(200).json({result});
+            }
+            if(obj.stderr !== ''){
+                const result = "compilation error";
+                return res.status(200).json({result});
+            }
+            if(obj.stdout !== op){
+                const result = "wrong answer";
+                fs.unlinkSync(outpath);
+                return res.status(200).json({result});
+            } else{
+                fs.unlinkSync(outpath);
+                return res.status(200).json({result: obj.stdout});
+            }
+        }else if(language === "py"){
+            const filepath = await generateFile(language, code);
+            let obj = spawnSync(`python ${filepath}`,[],{input:input,encoding:'utf-8',shell:true});
+            fs.unlinkSync(filepath);
+            if(obj.error){
+                const result = "compilation error";
+                return res.status(200).json({result});
+            }
+            if(obj.stderr !== ''){
+                const result = "compilation error";
+                return res.status(200).json({result});
+            }
+            return res.status(200).json({result: obj.stdout});
+        }
+    } catch (error) {
         console.error(error);
     }
 }
@@ -72,7 +146,7 @@ module.exports.AllSolForProb = async (req,res) => {
 module.exports.MySolStat = async (req,res) => {
     try {
         const { id } = req.params;
-        const doc = await Solution.findById(sol._id.toString());
+        const doc = await Solution.findById(id.toString());
         return res.status(200).json({message: "verdict of submission",success: true, doc});
     } catch (error) {
         console.error(error);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { GetProb, VerifyUser } from "../services/api";
+import { ChkSolStat, GetProb, PostCodeForRun, SubmitSol, VerifyUser } from "../services/api";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../redux/actions";
 
@@ -19,6 +19,9 @@ export default function SingleProblem(){
 
     const [language,setLanguage] = useState('c');
     const [code,setCode] = useState('');
+    const [stat,setStatus] = useState('');
+    const [input,setInput] = useState('');
+    const [output,setOutput] = useState('');
 
     useEffect(()=>{
         const getProb = async () => {
@@ -28,21 +31,52 @@ export default function SingleProblem(){
             setProConst(resp.doc.constraints);
             setDiff(resp.doc.difficulty);
             setWriter(resp.doc.writer);
+            if(token.token !== ""){
+                const data = { token: token.token };
+                const { status, user } = await VerifyUser(data);
+                if(!status){
+                    dispatch(logoutUser());
+                    navigate("/login");
+                }
+                setUName(user); 
+            }
         }
         getProb();
-    },[id]);
+    },[]);
     
     const handleSubmit = async () => {
         if(token.token === ""){
             navigate("/login");
         }
-        const data = { token: token.token };
-        const { status, user } = await VerifyUser(data);
-        if(!status){
-            dispatch(logoutUser());
-            navigate("/login");
+        if(language && code && uname){
+            const data = {
+                proid: id,
+                owner: uname,
+                problem: proName,
+                language: language,
+                code: code,
+            }
+            const { sol } = await SubmitSol(data);
+            let intervalID = setInterval( async () => {
+                const { doc } = await ChkSolStat(sol._id);
+                if (doc.verdict !== "pending") {
+                    clearInterval(intervalID); 
+                    setStatus(doc.verdict);
+                }
+            }, 1000);
         }
-        setUName(user); 
+    }
+
+    const handleRun = async () => {
+        if(language && code){
+            const data = {
+                input: input,
+                language: language,
+                code: code,
+            }
+            const resp = await PostCodeForRun(data);
+            setOutput(resp.result);
+        }
     }
 
     return (
@@ -69,21 +103,47 @@ export default function SingleProblem(){
                     <Link to={`/AllSubmissions/${proName}`} className="border">Submissions</Link>
                 </div>
             </div>
-            <div className="d-flex flex-row">
-                <form className="d-flex flex-column">
-                    <div className="my-2 ml-5">
-                        <select value={language} className="bg-gray-300" onChange={(ev)=>setLanguage(ev.target.value)}>
-                            <option value="c">C</option>
-                            <option value="cpp">C++</option>
-                            <option value="py">Python</option>
-                        </select>
-                    </div>
-                    <div>
-                        <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-gray-300" rows="25" cols="100"></textarea>
-                    </div>
-                </form>
-                <button onClick={handleSubmit} className="border">Submit</button>
+            <div className="flex flex-row justify-around">
+                <div>
+                    <form className="flex flex-col">
+                        <div className="my-2 ml-5">
+                            <select value={language} className="bg-gray-300" onChange={(ev)=>setLanguage(ev.target.value)}>
+                                <option value="c">C</option>
+                                <option value="cpp">C++</option>
+                                <option value="py">Python</option>
+                            </select>
+                        </div>
+                        <div>
+                            <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-gray-300" rows="25" cols="100"></textarea>
+                        </div>
+                    </form>
+                    <button onClick={handleSubmit} className="border">Submit</button>
+                </div>
+                <div>
+                    <form>
+                        <div className="mt-4">
+                            <p>Input</p>
+                            <textarea className="bg-gray-300" value={input} onChange={(ev)=>setInput(ev.target.value)} rows="10"></textarea>
+                        </div>
+                        <div className="">
+                            <p>Output</p>
+                            <textarea
+                                defaultValue={output}
+                                className="bg-gray-300"
+                                rows={10}
+                            />
+                        </div>
+                    </form>
+                    <button onClick={handleRun} className="border">Run</button>
+                </div>
             </div>
+            {
+                stat !== '' && (
+                    <div>
+                        Your Solution got {stat}!!!
+                    </div>
+                )
+            }
         </div>
     );
 }
