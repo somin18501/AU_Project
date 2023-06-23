@@ -4,6 +4,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     token:"",
+    search:"",
   },
   reducers: {
     loginUser:(state,val)=>{
@@ -23,10 +24,13 @@ export const userSlice = createSlice({
         state.token = "";
       }
     },
+    changeSearch:(state,val)=>{
+      state.search = val.payload;
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { loginUser, logoutUser, checkIfTokenExists } = userSlice.actions
+export const { loginUser, logoutUser, checkIfTokenExists, changeSearch } = userSlice.actions
 
 export default userSlice.reducer

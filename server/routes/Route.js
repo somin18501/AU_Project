@@ -1,6 +1,6 @@
 const { Signup, Login } = require("../controller/AuthController");
 const { AddProblem, ListAllProblem, ListSingleProblem } = require("../controller/problemController");
-const { SubmitSol, AllSolForProb, MySolStat, RunInput } = require("../controller/solController");
+const { SubmitSol, AllSolForProb, MySolStat, RunInput, AllSolForUser } = require("../controller/solController");
 const { uploadFile } = require("../controller/testController");
 const { userVerification } = require("../middleware/AuthMiddleware");
 const router = require("express").Router();
@@ -18,6 +18,7 @@ router.get('/allproblems', ListAllProblem);
 router.get('/singleproblem/:id', ListSingleProblem);
 
 router.get('/allsolproblem/:id', AllSolForProb);
+router.get('/allsoluser/:id', AllSolForUser);
 router.get('/mysolstat/:id', MySolStat);
 
 router.post('/',userVerification);

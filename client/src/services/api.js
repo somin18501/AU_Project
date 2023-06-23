@@ -65,6 +65,15 @@ export const GetProSol = async (id) => {
     }
 }
 
+export const GetUserSol = async (id) => {
+    try {
+        const response = await axios.get(`${API_URI}/allsoluser/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error while getting solution list', error.message);
+    }
+}
+
 export const AddProblem = async (data) => {
     try {
         const response = await axios.post(`${API_URI}/addproblem`,data,{ withCredentials: true });

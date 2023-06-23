@@ -143,6 +143,16 @@ module.exports.AllSolForProb = async (req,res) => {
     }
 }
 
+module.exports.AllSolForUser = async (req,res) => {
+    try {
+        const { id } = req.params;
+        const list = await Solution.find({owner:id});
+        return res.status(200).json({message: "all submissions of this user",success: true, list});
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports.MySolStat = async (req,res) => {
     try {
         const { id } = req.params;
