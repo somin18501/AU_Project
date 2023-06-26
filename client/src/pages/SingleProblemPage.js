@@ -114,7 +114,7 @@ export default function SingleProblem(){
                             </select>
                         </div>
                         <div>
-                            <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-white rounded-lg" rows="25" cols="100"></textarea>
+                            <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-white text-black rounded-lg" rows="25" cols="100"></textarea>
                         </div>
                     </form>
                     <button onClick={handleSubmit} className="border-2 rounded-lg m-2 ml-6 p-2">Submit</button>
@@ -123,13 +123,13 @@ export default function SingleProblem(){
                     <form>
                         <div className="mt-6">
                             <p>Input</p>
-                            <textarea className="bg-white rounded-lg mr-4 mt-2" value={input} onChange={(ev)=>setInput(ev.target.value)} rows="10"></textarea>
+                            <textarea className="bg-white text-black rounded-lg mr-4 mt-2" value={input} onChange={(ev)=>setInput(ev.target.value)} rows="10"></textarea>
                         </div>
                         <div className="mt-2">
                             <p>Output</p>
                             <textarea
                                 defaultValue={output}
-                                className="bg-white rounded-lg mr-4 mt-2"
+                                className="bg-white text-black rounded-lg mr-4 mt-2"
                                 rows={10}
                             />
                         </div>
