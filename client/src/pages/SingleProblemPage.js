@@ -117,7 +117,16 @@ export default function SingleProblem(){
                             <textarea value={code} onChange={(ev)=>setCode(ev.target.value)} className="ml-5 bg-white text-black rounded-lg" rows="25" cols="100"></textarea>
                         </div>
                     </form>
-                    <button onClick={handleSubmit} className="border-2 rounded-lg m-2 ml-6 p-2">Submit</button>
+                    <div className="flex flex-row">
+                        <button onClick={handleSubmit} className="border-2 rounded-lg m-2 ml-6 p-2">Submit</button>
+                        {
+                            stat !== '' && (
+                                <div className="ml-4 mt-4">
+                                    Verdict: Your Solution got {stat}!!!
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
                 <div>
                     <form>
@@ -137,13 +146,7 @@ export default function SingleProblem(){
                     <button onClick={handleRun} className="mt-1 border-2 rounded-lg p-2">Run</button>
                 </div>
             </div>
-            {
-                stat !== '' && (
-                    <div>
-                        Your Solution got {stat}!!!
-                    </div>
-                )
-            }
+            
         </div>
     );
 }
