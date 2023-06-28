@@ -23,6 +23,8 @@ export default function ProfilePage(){
                 setUName(user);
                 const { list } = await GetUserSol(user);
                 setSolArr(list);
+            }else{
+                setUName('random');
             }
         }
         validateUser();

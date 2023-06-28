@@ -39,10 +39,12 @@ export default function SingleProblem(){
                     navigate("/login");
                 }
                 setUName(user); 
+            }else{
+                setUName('random');
             }
         }
         getProb();
-    },[]);
+    },[uname]);
     
     const handleSubmit = async () => {
         if(token.token === ""){
