@@ -99,8 +99,8 @@ if(!fs.existsSync(outputPath)){
 //             const filepath = await generateFile(language, code);
 //             const jobId = path.basename(filepath).split('.')[0];
 //             const outpath = path.join(outputPath,`${jobId}.exe`);
-//             fs.unlinkSync(filepath);
 //             let obj = spawnSync(`g++ ${filepath} -o ${outpath} && cd ${outputPath} && ${jobId}.exe`,[],{input:input,encoding:'utf-8',shell:true});
+//             fs.unlinkSync(filepath);
 //             if(obj.error){
 //                 const result = "compilation error";
 //                 return res.status(200).json({result});
@@ -109,14 +109,8 @@ if(!fs.existsSync(outputPath)){
 //                 const result = "compilation error";
 //                 return res.status(200).json({result});
 //             }
-//             if(obj.stdout !== op){
-//                 const result = "wrong answer";
-//                 fs.unlinkSync(outpath);
-//                 return res.status(200).json({result});
-//             } else{
-//                 fs.unlinkSync(outpath);
-//                 return res.status(200).json({result: obj.stdout});
-//             }
+//             fs.unlinkSync(outpath);
+//             return res.status(200).json({result: obj.stdout});
 //         }else if(language === "py"){
 //             const filepath = await generateFile(language, code);
 //             let obj = spawnSync(`python ${filepath}`,[],{input:input,encoding:'utf-8',shell:true});
