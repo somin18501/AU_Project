@@ -2,7 +2,7 @@ const User = require("../models/UserModel");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const jwtSecret = "bjhfewf74926966jheufuf";
+const jwtSecret = process.env.JWT_SECRET;
 
 module.exports.userVerification = (req, res) => {
   let { token } = req.body;
