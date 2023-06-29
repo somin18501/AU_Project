@@ -17,7 +17,8 @@ app.listen(PORT, () => {
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000"],
+    origin: ["https://649d5f27e5453e64735fcd34--melodic-gecko-cbd72e.netlify.app"],
+    // origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
