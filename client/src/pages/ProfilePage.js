@@ -10,6 +10,7 @@ export default function ProfilePage(){
     const navigate = useNavigate();
     const [solArr,setSolArr] = useState([]);
     const [uname,setUName] = useState('');
+    const [show,setShow] = useState(null);
 
     useEffect(()=>{
         const validateUser = async ()=>{
@@ -29,6 +30,27 @@ export default function ProfilePage(){
         }
         validateUser();
     },[uname])
+
+    if(show !== null){
+        return (
+            <div className="ml-20 mr-20 mt-10">
+                <div className="flex flex-row justify-between text-white my-4 bg-gray-600 rounded-xl p-2">
+                    <div className="flex flex-row">
+                        <p className="mx-4">Language: {show.language}</p>
+                        <p className="mx-4">Verdict: {show.verdict}</p>
+                    </div>
+                    <button onClick={()=>setShow(null)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <textarea value={show.code} rows={20} className="w-full rounded-xl text-white" disabled/>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -57,7 +79,7 @@ export default function ProfilePage(){
                     <tbody>
                         {
                             solArr.length>0 && solArr.map((item)=>(
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr onClick={()=>setShow(item)} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4">
                                         {item.problem}
                                     </td>
