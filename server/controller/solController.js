@@ -34,13 +34,17 @@ module.exports.SubmitSol = async (req,res) => {
                     var op = tests[i].output;
                     const jobId = path.basename(filepath).split('.')[0];
                     const outpath = path.join(outputPath,`${jobId}`);
-                    let obj = spawnSync(`g++ ${filepath} -o ${outpath} && cd ${outputPath} && ${jobId}`,[],{input:ip,encoding:'utf-8',shell:true});
+                    let obj = spawnSync(`g++ ${filepath} -o ${outpath} && ${outpath}`,[],{input:ip,encoding:'utf-8',shell:true});
                     if(obj.error){
                         result = "compilation error";
+                        console.log("first: "+obj.error);
+                        fs.unlinkSync(outpath);
                         break;
                     }
                     if(obj.stderr !== ''){
                         result = "compilation error";
+                        console.log("second: "+obj.stderr);
+                        fs.unlinkSync(outpath);
                         break;
                     }
                     if(obj.stdout !== op){
@@ -99,14 +103,16 @@ module.exports.RunInput = async (req,res) => {
             const filepath = await generateFile(language, code);
             const jobId = path.basename(filepath).split('.')[0];
             const outpath = path.join(outputPath,`${jobId}`);
-            let obj = spawnSync(`g++ ${filepath} -o ${outpath} && cd ${outputPath} && ${jobId}`,[],{input:input,encoding:'utf-8',shell:true});
+            let obj = spawnSync(`g++ ${filepath} -o ${outpath} && ${outpath}`,[],{input:input,encoding:'utf-8',shell:true});
             fs.unlinkSync(filepath);
             if(obj.error){
                 const result = "compilation error";
+                console.log("first: "+obj.error);
                 return res.status(200).json({result});
             }
             if(obj.stderr !== ''){
                 const result = "compilation error";
+                console.log("second: "+obj.stderr);
                 return res.status(200).json({result});
             }
             fs.unlinkSync(outpath);
@@ -155,6 +161,17 @@ module.exports.MySolStat = async (req,res) => {
         const { id } = req.params;
         const doc = await Solution.findById(id.toString());
         return res.status(200).json({message: "verdict of submission",success: true, doc});
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+module.exports.DeleteSol = async (req,res) => {
+    try {
+        const { id } = req.params;
+        let prob = new ObjectId(id);
+        await Solution.deleteMany({proid:prob});
+        return res.status(200).json({message: "solutions deleted successfully",success: true});
     } catch (error) {
         console.error(error);
     }

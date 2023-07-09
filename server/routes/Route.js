@@ -1,7 +1,7 @@
 const { Signup, Login } = require("../controller/AuthController");
-const { AddProblem, ListAllProblem, ListSingleProblem } = require("../controller/problemController");
-const { SubmitSol, AllSolForProb, MySolStat, RunInput, AllSolForUser } = require("../controller/solController");
-const { uploadFile } = require("../controller/testController");
+const { AddProblem, ListAllProblem, ListSingleProblem, AllProbOfUser, DeleteProb } = require("../controller/problemController");
+const { SubmitSol, AllSolForProb, MySolStat, RunInput, AllSolForUser, DeleteSol } = require("../controller/solController");
+const { uploadFile, DeleteTest } = require("../controller/testController");
 const { userVerification } = require("../middleware/AuthMiddleware");
 const router = require("express").Router();
 
@@ -19,7 +19,12 @@ router.get('/singleproblem/:id', ListSingleProblem);
 
 router.get('/allsolproblem/:id', AllSolForProb);
 router.get('/allsoluser/:id', AllSolForUser);
+router.get('/allprobuser/:id', AllProbOfUser);
 router.get('/mysolstat/:id', MySolStat);
+
+router.delete('/deleteproblem/:id', DeleteProb);
+router.delete('/deletetestcase/:id', DeleteTest);
+router.delete('/deletesolutions/:id', DeleteSol);
 
 router.post('/',userVerification);
 

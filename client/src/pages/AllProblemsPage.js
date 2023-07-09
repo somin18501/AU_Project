@@ -13,6 +13,7 @@ export default function AllProblemPage(){
     useEffect(()=>{
         const getlist = async () =>{
             const { list } = await GetProbList();
+            console.log(list);
             setProArr(list); 
         }
         getlist();

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const API_URI = "http://127.0.0.1:8000";
-const API_URI = "https://onlinejudge-ewmi.onrender.com";
+const API_URI = "http://127.0.0.1:8000";
+// const API_URI = "https://onlinejudge-ewmi.onrender.com";
 
 export const Register = async (data) => {
     try {
@@ -108,5 +108,38 @@ export const PostCodeForRun = async (data) => {
         return response.data;
     } catch (error) {
         console.log('Error while running code', error.message);
+    }
+}
+
+export const GetUserProb = async (id) => {
+    try {
+        const response = await axios.get(`${API_URI}/allprobuser/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error while getting problem list', error.message);
+    }
+}
+
+export const DeleteProblem = async (id) => {
+    try {
+        await axios.delete(`${API_URI}/deleteproblem/${id}`);
+    } catch (error) {
+        console.log('Error while deleting problem', error.message);
+    }
+}
+
+export const DeleteTestcase = async (id) => {
+    try {
+        await axios.delete(`${API_URI}/deletetestcase/${id}`);
+    } catch (error) {
+        console.log('Error while deleting testcases', error.message);
+    }
+}
+
+export const DeleteSolution = async (id) => {
+    try {
+        await axios.delete(`${API_URI}/deletesolutions/${id}`);
+    } catch (error) {
+        console.log('Error while deleting solutions', error.message);
     }
 }

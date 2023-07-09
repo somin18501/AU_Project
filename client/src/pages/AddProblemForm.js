@@ -58,17 +58,17 @@ export default function AddProblemForm(){
         <div className="text-white mx-10 mt-2">
             <div>
                 <h3 className="text-2xl mt-4">Add Problem Name</h3>
-                <input  className="border rounded-md w-full" type="text" 
+                <input  className="border rounded-md w-full text-black" type="text" 
                             value={pName}
                             onChange={ev => setPName(ev.target.value)}
                             placeholder="Must be unique and short" required />
                 <h3 className="text-2xl mt-4">Add Problem Statement</h3>
-                <textarea   className="border w-full rounded-lg" type="text" rows={10}
+                <textarea   className="border w-full rounded-lg text-black" type="text" rows={10}
                             value={statement}
                             onChange={ev => setStatement(ev.target.value)}
                             placeholder="Must Explain Question properly" required />
                 <h3 className="text-2xl mt-4">Add Problem Constraints</h3>
-                <textarea   className="border w-full rounded-lg" type="text" rows={7} 
+                <textarea   className="border w-full rounded-lg text-black" type="text" rows={7} 
                             value={constraint}
                             onChange={ev => setConstraint(ev.target.value)}
                             placeholder="Must be to the point" />

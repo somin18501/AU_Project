@@ -7,24 +7,33 @@ module.exports.uploadFile = async (req,res) => {
     try {
         const { problem } = req.body;
         let prob = new ObjectId(problem);
-        const existingProname = await Testcase.findOne({ problem:prob });
-        if (existingProname) {
-            fs.unlinkSync(req.files.file.tempFilePath);
-            return res.json({ message: "Testcases already defined",success: false });
-        }else{
-            let fileName = req.files.file.name;
-            const parts = fileName.split(".");
-            const ext = parts[parts.length - 1];
-            const newName = "tests."+ext;
-            let newPath = path.join(process.cwd(),'public',newName);
-            req.files.file.mv(newPath);
-            let rawdata = fs.readFileSync(`${newPath}`);
-            let arr = JSON.parse(rawdata);
-            fs.unlinkSync(newPath);
-            const test = await Testcase.create({ problem: prob, tests: arr });
-            return res.status(201).json({message: "Testcases added successfully",success: true, test});
+        let fileName = req.files.file.name;
+        let uploadPath = path.join(__dirname, "public");
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
         }
+        const parts = fileName.split(".");
+        const ext = parts[parts.length - 1];
+        const newName = "tests."+ext;
+        uploadPath = path.join(uploadPath,newName);
+        await req.files.file.mv(uploadPath);
+        let arr = JSON.parse(fs.readFileSync(`${uploadPath}`,"utf-8"));
+        const test = new Testcase({ problem: prob, tests: arr });
+        test.save()
+        fs.unlink(uploadPath, (err) => {});
+        return res.status(201).json({message: "Testcases added successfully",success: true});
     } catch (error) {
         console.error(error);
     }
 }
+
+module.exports.DeleteTest = async (req,res) => {
+    try {
+        const { id } = req.params;
+        let prob = new ObjectId(id); 
+        await Testcase.deleteOne({problem:prob});
+        return res.status(200).json({message: "testcases deleted successfully",success: true});
+    } catch (error) {
+        console.error(error);
+    }
+} 

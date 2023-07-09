@@ -7,6 +7,7 @@ import SingleProblem from "./pages/SingleProblemPage";
 import AllSubmissionPage from "./pages/AllSubmissionPage";
 import AddProblemForm from "./pages/AddProblemForm";
 import ProfilePage from "./pages/ProfilePage";
+import MyProblemsPage from "./pages/MyProblemsPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/myproblems" element={<MyProblemsPage />} />
         <Route path="/SingleProblem/:id" element={<SingleProblem />} />
         <Route path="/addProblem" element={<AddProblemForm />} />
         <Route path="/AllSubmissions/:id" element={<AllSubmissionPage />} />

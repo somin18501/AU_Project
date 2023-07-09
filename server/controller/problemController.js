@@ -37,3 +37,23 @@ module.exports.ListSingleProblem = async (req,res) => {
         console.error(error);
     }
 }
+
+module.exports.AllProbOfUser = async (req,res) => {
+    try {
+        const { id } = req.params;
+        const list = await Problem.find({writer:id});
+        return res.status(200).json({message: "all problems of this user",success: true, list});
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+module.exports.DeleteProb = async (req,res) => {
+    try {
+        const { id } = req.params;
+        await Problem.findByIdAndDelete(id);
+        return res.status(200).json({message: "problem deleted successfully",success: true});
+    } catch (error) {
+        console.error(error);
+    }
+}
