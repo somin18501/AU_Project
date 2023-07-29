@@ -25,7 +25,6 @@ The list of technologies used for this project are as follows:
 
 ## Deployment
 <ul>
-  <li><strong>FrontEnd: </strong> The frontend is deployed in netlify, the link is <a href = "https://649dd705708a7524980ee416--transcendent-belekoy-de1aab.netlify.app/">here</a>.</li>
-  <li><strong>BackEnd: </strong> The backend is deployed in render, the link is <a href = "https://online-judge-5bu5.onrender.com">here</a>.</li>
+  <li><strong>FrontEnd: </strong> The frontend is deployed in netlify, the link is <a href = "https://64aa992d6a675c183ec4cac8--melodic-gecko-cbd72e.netlify.app/">here</a>.</li>
+  <li><strong>BackEnd: </strong> The backend is deployed in render, the link is <a href = "https://onlinejudge-ewmi.onrender.com">here</a>.</li>
 </ul>
-
